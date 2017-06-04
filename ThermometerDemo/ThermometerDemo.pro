@@ -24,15 +24,14 @@ SOURCES += src/main.cpp \
 		   src/ThermometerDemo.cpp
 		   
 FORMS += forms/ThermometerDemo.ui
-		   
 
 win32 {
 	build_pass:CONFIG(release, debug|release) {
-		LIBS += -L./lib/Thermometer.lib
+		LIBS += ../Thermometer/bin/Thermometer.lib
 	}
 
 	build_pass:CONFIG(debug, debug|release) {
-		LIBS += -L./lib/Thermometer.lib
+		LIBS += ../Thermometer/bin/Thermometer.lib
 		TARGET = $$join(TARGET,,,d)
 	}
 }

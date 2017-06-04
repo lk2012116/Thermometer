@@ -17,6 +17,7 @@ OBJECTS_DIR += ./tmp/object
 UI_DIR += ./tmp/ui
 RCC_DIR += ./tmp/rcc
 INCLUDEPATH += ./include
+DLLDESTDIR = ../ThermometerDemo/bin
 RESOURCES += Thermometer.qrc
 CONFIG += console qt warn_on release
 

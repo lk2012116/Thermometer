@@ -8,7 +8,7 @@ using namespace std;
 CThermometer::CThermometer(QWidget* parent)
 	: QGraphicsView(parent)
 	, m_pScene(new QGraphicsScene)
-	, m_pSvgRender(new QSvgRenderer(QString("E:/Codes/Thermometer/images/wenduji.svg")))
+	, m_pSvgRender(new QSvgRenderer(QString(":/images/wenduji.svg")))
 {
 	// ±³¾°
 	m_pBGItem = new QGraphicsSvgItem();
