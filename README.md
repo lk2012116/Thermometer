@@ -1,1 +1,3 @@
-# Thermometer
+温度计组件和Demo
+1.使用svg图片
+2.测试环境vs2013、qt5.8.0
