@@ -2,6 +2,8 @@
 #include <iostream>
 #include <QPainter>
 #include <QGraphicsItem>
+#include <QJsonDocument>
+#include <QJsonObject>
 
 using namespace std;
 
@@ -12,9 +14,10 @@ CThermometerDemo::CThermometerDemo(QWidget* parent)
 	, m_pTimer(new QTimer(this))
 {
 	m_ui.setupUi(this);
-	m_pTimer->setInterval(10 * 1000);
+	m_pTimer->setInterval(30 * 1000);
 	m_pTimer->start();
 	connect(m_pTimer, SIGNAL(timeout()), this, SLOT(slotTimeOut()));
+	slotTimeOut();
 }
 
 void CThermometerDemo::slotTimeOut()
@@ -51,28 +54,9 @@ void CThermometerDemo::download(const QString& url)
 void CThermometerDemo::onReadyRead()
 {
 	QByteArray data = m_reply->readAll();
-	QString time = QString::fromLocal8Bit(data).mid(14, 10)
-		+ QString(" ")
-		+ QString::fromLocal8Bit(data).mid(25, 8);
-	m_ui.label->setText(tr("Update Time:") + time);
-	QString strTemp = QString::fromLocal8Bit(data).mid(43, 3);
-	double temp = 0.0;
-	if (strTemp.right(1) == QString("}"))
-	{
-		if (strTemp.count() == 2)
-		{
-			temp = strTemp.mid(0, 1).toDouble();
-		}
-		else
-		{
-			temp = strTemp.mid(0, 2).toDouble();
-		}
-	}
-	else
-	{
-		temp = strTemp.toDouble();
-	}
-	m_ui.widget->setTemperature(temp);
+	QJsonObject obj = QJsonDocument::fromJson(data).object();
+	m_ui.label->setText(QString("Update time: ") + obj.value(QString("timestamp")).toString());
+	m_ui.widget->setTemperature(obj.value(QString("value")).toDouble());
 }
 
 void CThermometerDemo::onError(QNetworkReply::NetworkError error)
